@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Minik Hayatlar: Evim</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topBar" class="glass">
+      <div class="brand">
+        <span class="logo">◇</span>
+        <strong>Minik Hayatlar: Evim</strong>
+      </div>
+      <div class="topStats">
+        <span id="clockText">Pzt 06:00</span>
+        <span id="moneyText">₺0</span>
+        <span id="billText" class="pill">Fatura: yok</span>
+      </div>
+      <div class="speedControls" aria-label="Zaman hızı">
+        <button data-speed="0" title="Duraklat">⏸</button>
+        <button data-speed="1" class="active">1x</button>
+        <button data-speed="3">3x</button>
+        <button data-speed="8">8x</button>
+      </div>
+      <div class="modeControls" aria-label="Oyun modları">
+        <button data-mode="life" class="active">Yaşam</button>
+        <button data-mode="build">İnşa</button>
+        <button data-mode="buy">Eşya</button>
+      </div>
+    </header>
+
+    <main id="gameArea">
+      <canvas id="gameCanvas" width="1280" height="820"></canvas>
+      <div id="notificationStack" aria-live="polite"></div>
+      <div id="interactionMenu" class="glass hidden"></div>
+      <div id="buildCursor" class="hidden"></div>
+    </main>
+
+    <section id="bottomHud" class="glass">
+      <div id="portraitPanel">
+        <div id="portraitFace">🙂</div>
+        <div>
+          <strong id="charName">Yeni Karakter</strong>
+          <div id="moodText">Hazır</div>
+          <button id="callFriendBtn" class="smallBtn">Telefonla sosyalleş</button>
+        </div>
+      </div>
+
+      <div id="queuePanel">
+        <h3>Komut Sırası</h3>
+        <ol id="queueList"></ol>
+        <button id="clearQueueBtn" class="smallBtn danger">Sırayı Temizle</button>
+      </div>
+
+      <div id="tabsPanel">
+        <div class="tabs">
+          <button data-tab="needs" class="active">İhtiyaç</button>
+          <button data-tab="skills">Beceri</button>
+          <button data-tab="career">Kariyer</button>
+          <button data-tab="home">Ev</button>
+        </div>
+        <div id="tabContent"></div>
+      </div>
+    </section>
+
+    <aside id="toolPanel" class="glass hidden">
+      <div id="toolPanelHeader">
+        <strong id="toolTitle">Araçlar</strong>
+        <button id="closeToolPanel" class="smallBtn">×</button>
+      </div>
+      <div id="toolContent"></div>
+    </aside>
+
+    <div id="startOverlay" class="overlay">
+      <div class="startCard glass">
+        <h1>Minik Hayatlar: Evim</h1>
+        <p>Özgün, tarayıcıda çalışan yaşam simülasyonu prototipi. Karakter yarat, ev kur, ihtiyaçları yönet, eşya al, işe gir ve hayatı akıt.</p>
+        <div class="startActions">
+          <button id="newGameBtn">Yeni Oyun</button>
+          <button id="loadGameBtn">Kayıt Yükle</button>
+        </div>
+        <small>İpucu: Masaüstünde B/L mod değiştirir, Space duraklatır. Mobilde paneller büyük dokunma alanlarıyla çalışır.</small>
+      </div>
+    </div>
+
+    <div id="creatorOverlay" class="overlay hidden">
+      <form id="creatorForm" class="creatorCard glass">
+        <h2>Karakter Yarat</h2>
+        <div class="formGrid">
+          <label>İsim <input name="firstName" value="Arin" maxlength="18" required /></label>
+          <label>Soyisim <input name="lastName" value="Vale" maxlength="18" required /></label>
+          <label>Yaş Grubu
+            <select name="ageGroup"><option value="adult">Yetişkin</option><option value="young">Genç</option><option value="elder">Yaşlı</option></select>
+          </label>
+          <label>Görünüm
+            <select name="appearance"><option value="warm">Sıcak ton</option><option value="cool">Soğuk ton</option><option value="deep">Koyu ton</option><option value="light">Açık ton</option></select>
+          </label>
+          <label>Saç
+            <select name="hair"><option value="short">Kısa</option><option value="curly">Kıvırcık</option><option value="long">Uzun</option><option value="bun">Topuz</option></select>
+          </label>
+          <label>Kıyafet
+            <select name="outfit"><option value="casual">Gündelik</option><option value="smart">Şık</option><option value="sport">Spor</option><option value="artist">Sanatçı</option></select>
+          </label>
+        </div>
+        <fieldset>
+          <legend>Kişilikten 3 tane seç</legend>
+          <div id="traitChoices" class="chips"></div>
+        </fieldset>
+        <label>Hayat Hedefi
+          <select name="aspiration">
+            <option value="wealth">Zengin olmak</option>
+            <option value="artist">Büyük sanatçı olmak</option>
+            <option value="family">Mutlu çevre kurmak</option>
+            <option value="genius">Teknoloji dahisi olmak</option>
+            <option value="chef">Usta aşçı olmak</option>
+          </select>
+        </label>
+        <div class="startActions">
+          <button type="submit">Arsaya Başla</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script defer src="js/data.js"></script>
+  <script defer src="js/pathfinding.js"></script>
+  <script defer src="js/gameState.js"></script>
+  <script defer src="js/character.js"></script>
+  <script defer src="js/timeSystem.js"></script>
+  <script defer src="js/needsSystem.js"></script>
+  <script defer src="js/moodSystem.js"></script>
+  <script defer src="js/careerSystem.js"></script>
+  <script defer src="js/objectSystem.js"></script>
+  <script defer src="js/buildMode.js"></script>
+  <script defer src="js/saveSystem.js"></script>
+  <script defer src="js/renderer.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+</body>
+</html>

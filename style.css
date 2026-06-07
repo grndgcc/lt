@@ -1,0 +1,97 @@
+:root {
+  --bg: #10212a;
+  --panel: rgba(18, 32, 42, .82);
+  --panel-solid: #172c38;
+  --text: #f3fbff;
+  --muted: #b9ccd5;
+  --accent: #75ddb9;
+  --accent-2: #ffc857;
+  --danger: #ff6b6b;
+  --tile: 42px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: radial-gradient(circle at top, #24475a 0, var(--bg) 50%, #081318 100%); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; }
+button, input, select { font: inherit; }
+button { border: 0; border-radius: 12px; padding: 10px 14px; background: rgba(255,255,255,.12); color: var(--text); cursor: pointer; transition: transform .12s ease, background .12s ease; min-height: 42px; }
+button:hover { transform: translateY(-1px); background: rgba(255,255,255,.18); }
+button.active, button.primary { background: linear-gradient(135deg, var(--accent), #53aef7); color: #08202a; font-weight: 800; }
+button.danger, .danger { color: #ffe4e4; background: rgba(255,107,107,.2); }
+input, select { width: 100%; min-height: 42px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); background: rgba(0,0,0,.22); color: var(--text); padding: 9px 10px; }
+select option { color: #10212a; }
+.glass { backdrop-filter: blur(14px); background: var(--panel); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 14px 40px rgba(0,0,0,.28); }
+.hidden { display: none !important; }
+#app { width: 100vw; height: 100vh; position: relative; }
+#topBar { position: absolute; z-index: 20; left: 12px; right: 12px; top: 10px; min-height: 60px; border-radius: 18px; display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px; align-items: center; padding: 8px 10px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 170px; }
+.logo { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(145deg, #75ddb9, #53aef7); color: #06202c; font-weight: 900; }
+.topStats, .speedControls, .modeControls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.topStats span { padding: 8px 10px; background: rgba(0,0,0,.2); border-radius: 12px; white-space: nowrap; }
+.pill { color: var(--accent-2); }
+.speedControls button, .modeControls button { min-height: 38px; padding: 8px 11px; }
+#gameArea { position: absolute; inset: 0; overflow: hidden; }
+#gameCanvas { width: 100%; height: 100%; display: block; image-rendering: auto; touch-action: none; }
+#bottomHud { position: absolute; z-index: 18; left: 12px; right: 12px; bottom: calc(10px + var(--safe-bottom)); min-height: 132px; border-radius: 20px; display: grid; grid-template-columns: 280px minmax(240px, 1fr) minmax(330px, 440px); gap: 12px; padding: 12px; }
+#portraitPanel { display: flex; align-items: center; gap: 12px; min-width: 0; }
+#portraitFace { width: 72px; height: 72px; border-radius: 24px; display: grid; place-items: center; font-size: 40px; background: linear-gradient(145deg, #f9d29d, #f5a9b8); box-shadow: inset 0 -10px 24px rgba(0,0,0,.15); flex: 0 0 auto; }
+#moodText { margin: 3px 0 8px; color: var(--muted); font-size: 14px; }
+.smallBtn { min-height: 34px; padding: 7px 10px; border-radius: 10px; font-size: 14px; }
+#queuePanel, #tabsPanel { min-width: 0; }
+#queuePanel h3 { margin: 0 0 5px; font-size: 15px; color: var(--muted); }
+#queueList { display: flex; gap: 8px; list-style: none; padding: 0; margin: 0 0 8px; overflow-x: auto; }
+#queueList li { background: rgba(255,255,255,.1); border-radius: 12px; padding: 8px 10px; min-width: max-content; cursor: pointer; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
+.tabs button { min-height: 34px; padding: 7px 10px; border-radius: 10px; }
+#tabContent { max-height: 98px; overflow: auto; padding-right: 5px; }
+.needRow, .skillRow, .careerRow { display: grid; grid-template-columns: 92px 1fr 42px; gap: 8px; align-items: center; font-size: 13px; margin: 4px 0; }
+.bar { height: 10px; border-radius: 999px; background: rgba(255,255,255,.14); overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 50%; border-radius: 999px; background: linear-gradient(90deg, var(--danger), var(--accent-2), var(--accent)); }
+#toolPanel { position: absolute; z-index: 22; top: 84px; right: 14px; width: min(420px, calc(100vw - 28px)); max-height: calc(100vh - 250px); border-radius: 20px; padding: 12px; overflow: hidden; }
+#toolPanelHeader { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+#toolContent { overflow-y: auto; max-height: calc(100vh - 320px); padding-right: 4px; }
+.toolGrid, .catalogGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.toolCard { text-align: left; min-height: 80px; padding: 10px; border-radius: 14px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.09); }
+.toolCard.active { outline: 2px solid var(--accent); background: rgba(117,221,185,.18); }
+.toolCard strong { display: block; margin-bottom: 4px; }
+.toolCard small { color: var(--muted); }
+#interactionMenu { position: absolute; z-index: 30; min-width: 220px; max-width: 300px; border-radius: 16px; padding: 8px; }
+#interactionMenu h4 { margin: 6px 8px 8px; }
+#interactionMenu button { display: block; width: 100%; margin: 6px 0; text-align: left; }
+#notificationStack { position: absolute; z-index: 25; left: 16px; top: 84px; display: grid; gap: 8px; width: min(420px, calc(100vw - 32px)); pointer-events: none; }
+.toast { padding: 11px 13px; border-radius: 14px; background: rgba(10, 20, 25, .86); border: 1px solid rgba(255,255,255,.14); animation: toastIn .22s ease; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.overlay { position: absolute; inset: 0; z-index: 50; display: grid; place-items: center; padding: 18px; background: linear-gradient(180deg, rgba(5,12,16,.65), rgba(5,12,16,.92)); }
+.startCard, .creatorCard { width: min(820px, 96vw); border-radius: 28px; padding: clamp(18px, 4vw, 36px); }
+.startCard h1 { margin-top: 0; font-size: clamp(30px, 5vw, 54px); }
+.startCard p { color: var(--muted); line-height: 1.55; }
+.startActions { display: flex; gap: 12px; flex-wrap: wrap; margin: 18px 0; }
+.startActions button { min-height: 50px; padding-inline: 18px; font-weight: 800; }
+.creatorCard { max-height: 92vh; overflow-y: auto; }
+.creatorCard h2 { margin-top: 0; }
+.formGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+label { display: grid; gap: 6px; color: var(--muted); }
+fieldset { border: 1px solid rgba(255,255,255,.16); border-radius: 16px; margin: 16px 0; padding: 12px; }
+legend { color: var(--muted); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chips label { display: inline-flex; align-items: center; gap: 6px; color: var(--text); padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.11); cursor: pointer; }
+.chips input { width: auto; min-height: auto; accent-color: var(--accent); }
+.emptyHint { color: var(--muted); font-style: italic; }
+.kbd { display: inline-block; min-width: 24px; padding: 2px 6px; border-radius: 6px; background: rgba(255,255,255,.16); text-align: center; }
+@media (max-width: 920px) {
+  #topBar { grid-template-columns: 1fr; align-items: stretch; gap: 8px; }
+  .topStats, .speedControls, .modeControls { justify-content: center; }
+  #bottomHud { grid-template-columns: 1fr; max-height: 44vh; overflow-y: auto; min-height: 0; }
+  #portraitFace { width: 58px; height: 58px; font-size: 32px; border-radius: 18px; }
+  #toolPanel { top: auto; bottom: calc(12px + var(--safe-bottom)); max-height: 48vh; }
+  #notificationStack { top: 170px; }
+  .formGrid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) and (orientation: landscape) {
+  #topBar { left: 8px; right: 8px; top: 6px; grid-template-columns: 1fr auto auto; }
+  .brand strong { display: none; }
+  #bottomHud { left: 8px; right: 8px; bottom: 6px; grid-template-columns: 210px 1fr 300px; max-height: 34vh; padding: 8px; gap: 8px; }
+  #portraitFace { width: 46px; height: 46px; font-size: 26px; }
+  #tabContent { max-height: 76px; }
+  button { min-height: 36px; padding: 7px 9px; }
+  #notificationStack { top: 68px; }
+}
